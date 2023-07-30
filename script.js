@@ -78,14 +78,14 @@ buttonFilter.addEventListener("click", function() {
     paragraph.className = "indexParagraph"
 
     if (sortBy === "TopRanked") {
-        recommendations = recommendShowsByRank();
+        recommendations = recommendShows(sortBy)
         paragraph.textContent = "TOP RANKED";
 
     } else if (sortBy === "HiddenGems") {
-        recommendations = recommendLowPopularityShows();
+        recommendations = recommendShows(sortBy)
         paragraph.textContent = "HIDDEN GEMS";
     } else {
-        recommendations = recommendHighestScoreShows();
+        recommendations = recommendShows(sortBy);
         paragraph.textContent = "HIGHEST SCORE"
     }
     let imageContainer = document.getElementById("imageContainer");
@@ -139,39 +139,63 @@ function getAnimeID() {
 
 }
 
+function getMetaData(animeIDList, num) {
+    let animeMetaDataSorted = [];
+
+    for (let i = 0; i < animeIDList.length; i++) {
+        for (let j = 0; j < animeData.length; j++) {
+
+            if(animeData[j][0] === animeIDList[i]) {
+
+                animeMetaDataSorted.push(animeData[j][num]);
+            }
+        }
+    }
+
+    if (num === 17) {
+        animeMetaDataSorted.sort(((a,b) => a - b)); //Anime Ranking
+    } else if (num === 18) {
+        animeMetaDataSorted.sort(((a,b) => b-a)); // Anime Popularity
+    } else {
+        animeMetaDataSorted.sort(((a,b) => b - a)); //Anime score
+    }
+    console.log(animeMetaDataSorted);
+    return animeMetaDataSorted.slice(0,5);
+}
+
 //Fetches the ranking of the anime's given a list of animeIDs
-function getAnimeRankings(animeIDList) {
-
-    let animeRankingList = [];
-
-    for (let i = 0; i < animeIDList.length; i++) {
-        for (let j = 0; j < animeData.length; j++) {
-
-            if(animeData[j][0] === animeIDList[i]) {
-
-                animeRankingList.push(animeData[j][17]);
-            }
-        }
-    }
-    animeRankingList.sort(((a,b) => a - b));
-    return animeRankingList.slice(0,5);
-}
-
-function getPopularity(animeIDList) {
-    let animePopularityList = [];
-
-    for (let i = 0; i < animeIDList.length; i++) {
-        for (let j = 0; j < animeData.length; j++) {
-
-            if(animeData[j][0] === animeIDList[i]) {
-
-                animePopularityList.push(animeData[j][18]);
-            }
-        }
-    }
-    animePopularityList.sort(((a,b) => b-a));
-    return animePopularityList.slice(0,5);
-}
+// function getAnimeRankings(animeIDList) {
+//
+//     let animeRankingList = [];
+//
+//     for (let i = 0; i < animeIDList.length; i++) {
+//         for (let j = 0; j < animeData.length; j++) {
+//
+//             if(animeData[j][0] === animeIDList[i]) {
+//
+//                 animeRankingList.push(animeData[j][17]);
+//             }
+//         }
+//     }
+//     animeRankingList.sort(((a,b) => a - b));
+//     return animeRankingList.slice(0,5);
+// }
+//
+// function getPopularity(animeIDList) {
+//     let animePopularityList = [];
+//
+//     for (let i = 0; i < animeIDList.length; i++) {
+//         for (let j = 0; j < animeData.length; j++) {
+//
+//             if(animeData[j][0] === animeIDList[i]) {
+//
+//                 animePopularityList.push(animeData[j][18]);
+//             }
+//         }
+//     }
+//     animePopularityList.sort(((a,b) => b-a));
+//     return animePopularityList.slice(0,5);
+// }
 
 
 //adjusted cosine similarity to factor in if the input have more shows rated in common
@@ -311,16 +335,25 @@ function findHighestRatedFromUser() {
     return recommendedArray; //an array of highest rated animeID from recommended user
 }
 
-function recommendShowsByRank() {
+
+function recommendShows(type) {
     let recommendedArray = findHighestRatedFromUser();
-    // console.log(recommendedArray);
-    let sortedRankingList = getAnimeRankings(recommendedArray);
-    // console.log(sortedRankingList);
+
+    let num = 0;
+    if (type === "TopRanked") {
+        num = 17;
+    } else if (type === "HiddenGems") {
+        num = 18
+    } else {
+        num = 2; // SCORE
+    }
+    let sortedRankingList = getMetaData(recommendedArray, num);
+
     let sortedAnimeNames = [];
 
     for (let i = 0; i < sortedRankingList.length; i++) {
         for (let j = 0; j < animeData.length; j++) {
-            if (animeData[j][17] === sortedRankingList[i]) {
+            if (animeData[j][num] === sortedRankingList[i]) {
                 //can add any other meta-data we need to display
                 sortedAnimeNames.push(animeData[j][1]);
                 recommendationsID.push(animeData[j][0]);
@@ -329,31 +362,48 @@ function recommendShowsByRank() {
         }
     }
     return sortedAnimeNames;
-}
-function recommendLowPopularityShows() {
-    let recommendedArray = findHighestRatedFromUser();
-    // console.log(recommendedArray);
-    let sortedPopularityList = getPopularity(recommendedArray);
-    // console.log(sortedPopularityList);
-    let sortedAnimeNames = [];
 
-    for (let i = 0; i < sortedPopularityList.length; i++) {
-        for (let j = 0; j < animeData.length; j++) {
-            if (animeData[j][18] === sortedPopularityList[i]) {
-                //can add any other meta-data we need to display
-                sortedAnimeNames.push(animeData[j][1]);
-                recommendationsID.push(animeData[j][0]);
-                break;
-            }
-        }
-    }
-    return sortedAnimeNames;
 }
 
-// function recommendHighestScoreShows() {
+// function recommendShowsByRank() {
 //     let recommendedArray = findHighestRatedFromUser();
-//     let sortedScoreList =
+//     // console.log(recommendedArray);
+//     let sortedRankingList = getAnimeRankings(recommendedArray);
+//     // console.log(sortedRankingList);
+//     let sortedAnimeNames = [];
+//
+//     for (let i = 0; i < sortedRankingList.length; i++) {
+//         for (let j = 0; j < animeData.length; j++) {
+//             if (animeData[j][17] === sortedRankingList[i]) {
+//                 //can add any other meta-data we need to display
+//                 sortedAnimeNames.push(animeData[j][1]);
+//                 recommendationsID.push(animeData[j][0]);
+//                 break;
+//             }
+//         }
+//     }
+//     return sortedAnimeNames;
 // }
+// function recommendLowPopularityShows() {
+//     let recommendedArray = findHighestRatedFromUser();
+//     // console.log(recommendedArray);
+//     let sortedPopularityList = getPopularity(recommendedArray);
+//     // console.log(sortedPopularityList);
+//     let sortedAnimeNames = [];
+//
+//     for (let i = 0; i < sortedPopularityList.length; i++) {
+//         for (let j = 0; j < animeData.length; j++) {
+//             if (animeData[j][18] === sortedPopularityList[i]) {
+//                 //can add any other meta-data we need to display
+//                 sortedAnimeNames.push(animeData[j][1]);
+//                 recommendationsID.push(animeData[j][0]);
+//                 break;
+//             }
+//         }
+//     }
+//     return sortedAnimeNames;
+// }
+
 
 
 
