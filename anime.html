@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> FAINDA</title>
+    <link rel="stylesheet"  href="style.css"/>
+
+</head>
+
+<body>
+
+
+<nav>
+    <a href="index.html">HOME &nbsp&nbsp&nbsp&nbsp&nbsp </a>
+    <a href="manga.html">&nbsp&nbsp&nbsp&nbsp&nbspMANGA </a>
+</nav>
+
+<div id="loading-message">
+    Loading...
+</div>
+
+
+
+<div class="search-box">
+    <div class="row">
+        <input type="text" placeholder="Enter Anime!!" id="anime-name"
+               autocomplete="off">
+        <label for="rate">Rate: </label>
+        <select name="Rating" id="rate">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <button id="search-button"><i class="fa-solid fa-plus"></i></button>
+    </div>
+    <div class="result-box"></div>
+</div>
+
+
+<div class="container">
+    <div id="displayContainer">
+    <ol id="displayList"></ol>
+    </div>
+    <div class="bottom-left">
+        <label for="sort">Sort by: </label>
+        <select name="SortBy" id="sort">
+            <option value="TopRanked">Top Ranked</option>
+            <option value="HiddenGems">Hidden Gems</option>
+            <option value="HighScore">Highest Score</option>
+        </select>
+    </div>
+    <button id="filter" class="btn-bottom-right">
+        <i class="fa-solid fa-magnifying-glass"></i></button>
+</div>
+
+<div id="recommendations"><h1 class="recom-title">FAINDA • ファインダ</h1></div>
+
+
+<div id="imageContainer"></div>
+
+<div class="modal" id="myModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="image" id="modalImage" src="" alt="">
+        <h3 class="title" id="modalTitle"></h3>
+        <p class="description" id="modalDescription"></p>
+    </div>
+</div>
+
+
+<img src="images/spiderlily-PhotoRoom.png" class="flower-deco-15">
+<!--<img src="images/spiderlily-PhotoRoom.png" class="flower-deco15">-->
+<img src="images/skeleton.png" class="skeleton-deco">
+<script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/pako/1.0.3/pako.min.js"></script>
+<script src="https://kit.fontawesome.com/01a2aa2290.js" crossorigin="anonymous"></script>
+<script src="autocomplete.js"></script>
+<script src="loading.js"></script>
+
+<div id="popupContainer" class="popup-container">
+    <div id="popupContent" class="popup-content">
+        <p>You have already added this anime :)</p>
+    </div>
+</div>
+
+<div id="popupContainer2" class="popup-container">
+    <div id="popupContent2" class="popup-content">
+        <p>Please ensure that the name is correct!!</p>
+    </div>
+</div>
+
+
+
+<div class="socials">
+    <a href="https://www.instagram.com/_dylanchiu_/"><i class="fa-brands fa-instagram fa-2xl" style="color: #4d2a5a;"></i>&nbsp&nbsp</a>
+    <a href="https://github.students.cs.ubc.ca/dylan004?tab=repositories"><i class="fa-brands fa-github fa-2xl" style="color: #4d2a5a;"></i>&nbsp&nbsp</a>
+    <a href="www.linkedin.com/in/dylan-chiu-437aa727a"><i class="fa-brands fa-linkedin fa-2xl" style="color: #4d2a5a;"></i></a>
+</div>
+
+</body>
+</html>
