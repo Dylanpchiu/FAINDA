@@ -12,7 +12,7 @@ let count = 0;
 let buttonAdd = document.getElementById('search-button');
 let buttonFilter = document.getElementById("filter");
 
-//fetches the data for the anime numbers
+///////////////////////////////////////////INITIALIZATION///////////////////////////////////////////////////////////////
 fetch("anime-filtered.csv.gz")
     .then(response => response.arrayBuffer())
     .then(buffer => {
@@ -35,6 +35,8 @@ fetch("user-filtered-updated.csv.gz")
         userData = parsedDataUser;
     })
     .catch(error => console.log("Error:", error));
+
+///////////////////////////////////////////BUTTONS/////////////////////////////////////////////////////////////////////
 
 buttonAdd.addEventListener('click', function() {
     let animeID = getAnimeID();
@@ -78,14 +80,14 @@ buttonFilter.addEventListener("click", function() {
     paragraph.className = "indexParagraph"
 
     if (sortBy === "TopRanked") {
-        recommendations = recommendShowsByRank();
+        recommendations = recommendShows(sortBy)
         paragraph.textContent = "TOP RANKED";
 
     } else if (sortBy === "HiddenGems") {
-        recommendations = recommendLowPopularityShows();
+        recommendations = recommendShows(sortBy)
         paragraph.textContent = "HIDDEN GEMS";
     } else {
-        recommendations = recommendHighestScoreShows();
+        recommendations = recommendShows(sortBy);
         paragraph.textContent = "HIGHEST SCORE"
     }
     let imageContainer = document.getElementById("imageContainer");
@@ -104,6 +106,7 @@ buttonFilter.addEventListener("click", function() {
     ratingVector = [];
     count++;
 })
+
 
 //fetches AnimeID given the name
 function getAnimeID() {
@@ -139,46 +142,33 @@ function getAnimeID() {
 
 }
 
-//Fetches the ranking of the anime's given a list of animeIDs
-function getAnimeRankings(animeIDList) {
-
-    let animeRankingList = [];
+function getMetaData(animeIDList, num) {
+    let animeMetaDataSorted = [];
 
     for (let i = 0; i < animeIDList.length; i++) {
         for (let j = 0; j < animeData.length; j++) {
 
             if(animeData[j][0] === animeIDList[i]) {
 
-                animeRankingList.push(animeData[j][17]);
+                animeMetaDataSorted.push(animeData[j][num]);
             }
         }
     }
-    animeRankingList.sort(((a,b) => a - b));
-    return animeRankingList.slice(0,5);
-}
 
-function getPopularity(animeIDList) {
-    let animePopularityList = [];
-
-    for (let i = 0; i < animeIDList.length; i++) {
-        for (let j = 0; j < animeData.length; j++) {
-
-            if(animeData[j][0] === animeIDList[i]) {
-
-                animePopularityList.push(animeData[j][18]);
-            }
-        }
+    if (num === 17) {
+        animeMetaDataSorted.sort(((a,b) => a - b)); //Anime Ranking
+    } else if (num === 18) {
+        animeMetaDataSorted.sort(((a,b) => b-a)); // Anime Popularity
+    } else {
+        animeMetaDataSorted.sort(((a,b) => b - a)); //Anime score
     }
-    animePopularityList.sort(((a,b) => b-a));
-    return animePopularityList.slice(0,5);
+    console.log(animeMetaDataSorted);
+    return animeMetaDataSorted.slice(0,5);
 }
-
 
 //adjusted cosine similarity to factor in if the input have more shows rated in common
 //vecA is the input Data and vecB is the Other users Data
 function cosineSimilarity(vecA, vecB) {
-    // console.log(vecA);
-    // console.log(vecB);
     if (vecA.length != vecB.length) {
         throw new Error("Vectors must have the same length");
     }
@@ -311,16 +301,25 @@ function findHighestRatedFromUser() {
     return recommendedArray; //an array of highest rated animeID from recommended user
 }
 
-function recommendShowsByRank() {
+
+function recommendShows(type) {
     let recommendedArray = findHighestRatedFromUser();
-    // console.log(recommendedArray);
-    let sortedRankingList = getAnimeRankings(recommendedArray);
-    // console.log(sortedRankingList);
+
+    let num = 0;
+    if (type === "TopRanked") {
+        num = 17;
+    } else if (type === "HiddenGems") {
+        num = 18
+    } else {
+        num = 2; // SCORE
+    }
+    let sortedRankingList = getMetaData(recommendedArray, num);
+
     let sortedAnimeNames = [];
 
     for (let i = 0; i < sortedRankingList.length; i++) {
         for (let j = 0; j < animeData.length; j++) {
-            if (animeData[j][17] === sortedRankingList[i]) {
+            if (animeData[j][num] === sortedRankingList[i]) {
                 //can add any other meta-data we need to display
                 sortedAnimeNames.push(animeData[j][1]);
                 recommendationsID.push(animeData[j][0]);
@@ -329,35 +328,10 @@ function recommendShowsByRank() {
         }
     }
     return sortedAnimeNames;
-}
-function recommendLowPopularityShows() {
-    let recommendedArray = findHighestRatedFromUser();
-    // console.log(recommendedArray);
-    let sortedPopularityList = getPopularity(recommendedArray);
-    // console.log(sortedPopularityList);
-    let sortedAnimeNames = [];
 
-    for (let i = 0; i < sortedPopularityList.length; i++) {
-        for (let j = 0; j < animeData.length; j++) {
-            if (animeData[j][18] === sortedPopularityList[i]) {
-                //can add any other meta-data we need to display
-                sortedAnimeNames.push(animeData[j][1]);
-                recommendationsID.push(animeData[j][0]);
-                break;
-            }
-        }
-    }
-    return sortedAnimeNames;
 }
 
-// function recommendHighestScoreShows() {
-//     let recommendedArray = findHighestRatedFromUser();
-//     let sortedScoreList =
-// }
-
-
-
-//Html element stuff
+///////////////////////////////////////////HTML ELEMENTS////////////////////////////////////////////////////////////////
 
 async function fetchAnimeImages(animeIds) {
     const delay = 500; // Delay in milliseconds (2 calls per second) Api only allows 3 per second
