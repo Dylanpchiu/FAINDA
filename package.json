@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "csv-parser": "^3.0.0",
+    "dotenv": "^16.3.1",
     "node-cache": "^5.1.2",
     "pako": "^2.1.0"
   }
