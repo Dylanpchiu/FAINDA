@@ -11,6 +11,7 @@ let IDCheck = [];
 let count = 0;
 let buttonAdd = document.getElementById('search-button');
 let buttonFilter = document.getElementById("filter");
+const fs = require('fs');
 
 ///////////////////////////////////////////INITIALIZATION///////////////////////////////////////////////////////////////
 fetch("anime-filtered.csv.gz")
@@ -31,6 +32,7 @@ fetch("user-filtered-updated.csv.gz")
         const compressedDataUser = new Uint8Array(buffer);
         const decompressedDataUser = pako.inflate(compressedDataUser, { to: "string" });
         // Process the decompressed CSV data
+
         const parsedDataUser = Papa.parse(decompressedDataUser).data;
         userData = parsedDataUser;
     })

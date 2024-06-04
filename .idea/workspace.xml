@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a171005-13c5-43a1-8d66-b5c15d72c424" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+    <list default="true" id="e7a8d84a-106d-4f29-ad4d-5df8579bfda6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +40,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.3.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.3.1&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/dylanchiu/Desktop/FAINDA.js&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
@@ -65,7 +67,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3a171005-13c5-43a1-8d66-b5c15d72c424" name="Changes" comment="" />
+      <changelist id="e7a8d84a-106d-4f29-ad4d-5df8579bfda6" name="Changes" comment="" />
       <created>1687201154814</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -98,6 +100,13 @@
       <workItem from="1690748253065" duration="755000" />
       <workItem from="1690834299719" duration="357000" />
       <workItem from="1690931025658" duration="2418000" />
+      <workItem from="1692224246907" duration="1571000" />
+      <workItem from="1692640028154" duration="752000" />
+      <workItem from="1693506798844" duration="358000" />
+      <workItem from="1693958726397" duration="188000" />
+      <workItem from="1694072637271" duration="352000" />
+      <workItem from="1706909187549" duration="2000" />
+      <workItem from="1717522785030" duration="290000" />
     </task>
     <servers />
   </component>
