@@ -1,0 +1,46 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "HOME" [ref=e3] [cursor=pointer]:
+      - /url: index.html
+    - link "MANGA" [ref=e4] [cursor=pointer]:
+      - /url: manga.html
+  - generic [ref=e6]:
+    - textbox "Enter Anime!!" [ref=e7]
+    - generic [ref=e8]: "Rate:"
+    - combobox "Rate:" [ref=e9]:
+      - option "1" [selected]
+      - option "2"
+      - option "3"
+      - option "4"
+      - option "5"
+      - option "6"
+      - option "7"
+      - option "8"
+      - option "9"
+      - option "10"
+    - button [ref=e10]:
+      - generic [ref=e11] [cursor=pointer]: +
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - list
+    - generic [ref=e14]:
+      - text: "Sort by:"
+      - combobox "Sort by:" [ref=e15]:
+        - option "Top Ranked" [selected]
+        - option "Hidden Gems"
+        - option "Highest Score"
+    - button [ref=e16]:
+      - generic [ref=e17] [cursor=pointer]: 
+  - heading "FAINDA • ファインダ" [level=1] [ref=e19]
+  - img [ref=e20]
+  - img [ref=e21]
+  - generic [ref=e22]:
+    - link [ref=e23] [cursor=pointer]:
+      - /url: https://www.instagram.com/_dylanchiu_/
+      - generic [ref=e24]: 
+    - link [ref=e25] [cursor=pointer]:
+      - /url: https://github.com/Dylanpchiu
+      - generic [ref=e26]: 
+    - link [ref=e27] [cursor=pointer]:
+      - /url: www.linkedin.com/in/dylan-chiu-437aa727a
+      - generic [ref=e28]: 

@@ -4,56 +4,74 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-FAINDA (ファインダ) is a static anime/manga recommendation web app hosted on Firebase Hosting. There is no build step — all files in `public/` are served directly.
+FAINDA (ファインダ) is an anime recommendation web app hosted on Firebase (Hosting + Functions + Firestore + Auth). Firebase Functions run the recommendation engine server-side; the frontend is plain JS with no build step.
 
-## Deployment
+## Commands
 
 ```bash
-firebase deploy --only hosting
-firebase serve --only hosting   # local preview on localhost:5000
-```
+# Local development (required — /__/firebase/init.js only works via firebase serve)
+firebase emulators:start
 
-The Firebase project is `fainda-bc446` (`.firebaserc`). Firestore is configured but all reads/writes are denied — the app is static hosting only.
+# Deploy everything
+firebase deploy
+
+# Deploy only hosting or functions
+firebase deploy --only hosting
+firebase deploy --only functions
+```
 
 ## Architecture
 
-The app has two functional pages:
+**Pages:**
+- `public/anime.html` — recommendation UI (the main app)
+- `public/manga.html` — stub (under construction)
+- `public/index.html` — landing page
 
-- **`public/anime.html`** — the recommendation UI
-- **`public/manga.html`** — stub ("under construction")
-- **`public/index.html`** — landing page with nav links
-
-All logic lives in three plain JS files loaded as classic `<script>` tags (not modules):
+**Frontend JS** (classic `<script>` tags, no bundler):
 
 | File | Purpose |
 |---|---|
-| `script.js` | Core recommendation engine + DOM manipulation |
-| `autocomplete.js` | Anime name autocomplete from `data/anime-names.csv` |
-| `loading.js` | Modal open/close + loading message display |
+| `public/script.js` | Auth, Firestore read/write, calls Firebase Function, renders recommendation cards |
+| `public/autocomplete.js` | Live anime search via Jikan API (`/v4/anime?q=`) with 350ms debounce |
+| `public/loading.js` | `openModal` / `closeModal` for the detail overlay |
 
-External libraries are loaded from CDN: **PapaParse** (CSV parsing), **pako** (gzip decompression), **Font Awesome**.
+Firebase SDK (compat v10) is loaded from CDN before `script.js`. The app config is injected automatically via `/__/firebase/init.js` (Firebase Hosting reserved URL — requires `firebase serve` or emulators locally, never open as `file://`).
+
+**Backend — `functions/index.js`:**
+- Single callable function: `getRecommendations({ ratings, sortBy })`
+- Loads `anime-filtered.csv.gz` and `user-filtered-updated.csv.gz` from `functions/data/` on first invocation, caches them in memory with `node-cache` for warm calls
+- Runs user-based collaborative filtering (cosine similarity) against 7.6M user rating rows
+- Returns top-5 anime objects `{ animeId, name, score, synopsis, ranked, popularity }`
+- Saves recommendation history to Firestore if the caller is authenticated
+- Memory: 1GB, timeout: 120s (cold start ~2-3s, warm calls fast)
+
+**Firestore schema:**
+```
+users/{uid}/
+  ratings[]        — { animeId, animeName, score } — saved when user adds anime
+  recommendations[] — { timestamp, sortBy, results[] } — saved after each query
+```
+
+**Firestore rules:** authenticated users can only read/write their own document.
 
 ## Data
 
-All data lives in `public/data/`:
+`functions/data/` (server-side only, never sent to browser):
+- `anime-filtered.csv.gz` — 14,954 rows. Columns: `[0]` anime_id, `[1]` Name, `[2]` Score, `[6]` synopsis, `[17]` Ranked, `[18]` Popularity
+- `user-filtered-updated.csv.gz` — 7,667,185 rows. Format: `[userID, animeID, rating]`, sorted by userID (no header row)
 
-- `anime-filtered.csv.gz` — anime metadata (columns: ID, name, score, ..., synopsis at index 6, rank at index 17, popularity at index 18)
-- `user-filtered-updated.csv.gz` — user rating rows `[userID, animeID, rating]`, sorted by userID
-- `anime-names.csv` — pipe-delimited (`|`) list of anime names for autocomplete
-
-Both `.gz` files are fetched and decompressed client-side with pako on page load.
+`public/data/`:
+- `anime-names.csv` — legacy file, no longer used (autocomplete now calls Jikan)
 
 ## Recommendation Algorithm
 
-`script.js` implements user-based collaborative filtering:
+1. User rates anime → `inputUserData: [{animeId, score}]` built up client-side
+2. On "Find" click → `getRecommendations` Firebase Function called
+3. Function scans all users in the CSV, computes adjusted cosine similarity (weighted by % of input anime in common)
+4. Most similar user's highest-rated unseen shows become candidates
+5. Candidates sorted by `ranked` / `popularity` / `score` column, top 5 returned
+6. Frontend calls Jikan `/v4/anime/{id}/pictures` for cover art (500ms delay between calls)
 
-1. User rates 1+ anime via the search UI → stored in `inputUserData`
-2. `similarityFilter()` scans all users in the dataset, computing adjusted cosine similarity between the input rating vector and each dataset user's vector
-3. The most similar user's highest-rated shows (excluding already-rated ones) become recommendations
-4. `recommendShows(type)` sorts recommendations by rank (`17`), popularity (`18`), or score (`2`) and returns top 5
-5. `fetchAnimeImages()` calls the **Jikan API** (`/v4/anime/{id}/pictures`) for cover art — throttled to one call per 500ms to stay within the 3 req/sec limit
+## Authentication
 
-## Known Issues
-
-- `index.html` contains a broken Firebase Analytics snippet that uses `require('dotenv')` inside a browser ES module — this will throw at runtime. The analytics are non-functional.
-- The `package.json` node dependencies (`csv-parser`, `dotenv`, `node-cache`, `pako`) are not used by the frontend; the app uses CDN versions instead.
+Firebase Auth (email/password + Google). Auth state managed in `script.js` via `onAuthStateChanged`. On sign-in, saved ratings are loaded from Firestore and pre-populated into the UI.

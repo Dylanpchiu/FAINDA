@@ -1,73 +1,41 @@
-//This needed to be done
-let availableKeywords = [];
-
-fetch("data/anime-names.csv")
-    .then(response => response.text())
-    .then(csvData => {
-        // Split the CSV data into individual lines
-        var lines = csvData.split('\n');
-
-        // Specify the custom delimiter
-        var delimiter = '|';
-
-        // Process each line to extract the elements
-        var extractedElements = [];
-        lines.forEach(line => {
-            var elements = line.split(delimiter);
-
-            // Process each element to handle quotes
-            elements.forEach(element => {
-                var trimmedElement = element.trim();
-
-                // Check if the element is surrounded by double quotes
-                if (trimmedElement.startsWith('"') && trimmedElement.endsWith('"')) {
-                    // Remove the surrounding quotes and add the element
-                    var extractedElement = trimmedElement.slice(1, -1);
-                    extractedElements.push(extractedElement);
-                } else {
-                    // Add the element as is
-                    extractedElements.push(trimmedElement);
-                }
-            });
-        });
-
-        availableKeywords = extractedElements;
-    })
-    .catch(error => console.log("Error:", error));
-
-
-
-
-
 const resultsBox = document.querySelector(".result-box");
 const inputBox = document.getElementById("anime-name");
 
-inputBox.onkeyup = function() {
-    let result = [];
-    let input = inputBox.value;
-    if(input.length) {
-        result = availableKeywords.filter((keyword) => {
-          return  keyword.toLowerCase().includes(input.toLowerCase());
-        });
-        // console.log(result);
-    }
-    display(result);
+let debounceTimer;
 
-    if(!result.length) {
-        resultsBox.innerHTML = '';
-    }
+inputBox.addEventListener("input", () => {
+  clearTimeout(debounceTimer);
+  const query = inputBox.value.trim();
+  if (!query) { resultsBox.innerHTML = ""; return; }
+  debounceTimer = setTimeout(() => searchAnime(query), 350);
+});
+
+async function searchAnime(query) {
+  try {
+    const res = await fetch(
+      `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=10&sfw=true`
+    );
+    const data = await res.json();
+    displayResults(data.data || []);
+  } catch {
+    resultsBox.innerHTML = "";
+  }
 }
 
-function display(result) {
-    const content = result.map((list) =>{
-        return "<li onclick=selectInput(this)>" + list + "</li>";
+function displayResults(results) {
+  if (!results.length) { resultsBox.innerHTML = ""; return; }
+
+  const ul = document.createElement("ul");
+  for (const anime of results) {
+    const li = document.createElement("li");
+    li.textContent = anime.title;
+    li.addEventListener("click", () => {
+      window.selectedAnimeId = anime.mal_id;
+      inputBox.value = anime.title;
+      resultsBox.innerHTML = "";
     });
-
-    resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
+    ul.appendChild(li);
+  }
+  resultsBox.innerHTML = "";
+  resultsBox.appendChild(ul);
 }
-
-function selectInput(list) {
-    inputBox.value = list.innerHTML;
-    resultsBox.innerHTML = '';
-}
-

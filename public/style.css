@@ -290,3 +290,93 @@ button .fa-solid {
 .show-popup {
     display: block;
 }
+
+/* Auth bar */
+.auth-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px 20px 0;
+    gap: 12px;
+    font-family: "Arial", monospace;
+    font-size: small;
+}
+.auth-bar a {
+    color: black;
+    text-decoration: none;
+}
+.auth-bar a:hover {
+    color: #a6a1a1;
+}
+#user-email {
+    color: #4d2a5a;
+    font-size: small;
+    font-family: "Arial", monospace;
+}
+
+/* Auth modal overrides */
+.auth-modal-content {
+    width: 300px;
+    max-width: 90vw;
+}
+.auth-modal-content h3 {
+    margin: 0 0 16px;
+}
+.auth-modal-content input[type="email"],
+.auth-modal-content input[type="password"] {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    height: auto;
+    padding: 8px 10px;
+    margin: 8px 0;
+    border: 0;
+    outline-style: solid;
+    outline-width: 1px;
+    font-size: 14px;
+    background: white;
+    flex: unset;
+    color: #333;
+}
+.auth-modal-content button {
+    display: block;
+    width: 100%;
+    padding: 9px;
+    margin: 8px 0;
+    background: black;
+    color: white;
+    font-family: "Arial Black", monospace;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 0;
+    outline: 0;
+}
+.auth-modal-content .google-btn {
+    background: white;
+    color: black;
+    outline-style: solid;
+    outline-width: 1px;
+}
+.auth-modal-content .google-btn:hover,
+.auth-modal-content button:hover {
+    opacity: 0.8;
+}
+.auth-modal-content hr {
+    margin: 14px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+.auth-modal-content p {
+    font-size: 12px;
+    color: #666;
+    margin: 4px 0;
+}
+.auth-modal-content p a {
+    color: #4d2a5a;
+    font-size: 12px;
+}
+#auth-error {
+    color: red;
+    min-height: 14px;
+}
