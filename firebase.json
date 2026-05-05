@@ -1,0 +1,25 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/anime",
+        "destination": "/anime.html"
+      },
+      {
+        "source": "/manga",
+        "destination": "/manga.html"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "cleanUrls": true
+  }
+}
