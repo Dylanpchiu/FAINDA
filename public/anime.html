@@ -3,64 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FAINDA</title>
-    <link rel="stylesheet" href="style.css"/>
+    <title>FAINDA · Anime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
-<body>
+<body class="page-anime">
 
+<!-- Fixed background decorations -->
+<img src="images/skeleton.png" alt="" class="img-skeleton-anime">
+<img src="images/spiderlily-PhotoRoom.png" alt="" class="img-spiderlily-anime">
+
+<!-- Loading overlay -->
+<div id="loading-message">SEARCHING…</div>
+
+<!-- Popup toasts -->
+<div id="popupContainer" class="popup-container">
+    <div class="popup-content">Already added this anime.</div>
+</div>
+<div id="popupContainer2" class="popup-container">
+    <div class="popup-content">Search and select an anime from the list first.</div>
+</div>
+
+<!-- Top bar -->
+<div class="top-bar">
+    <span>
+        <img src="images/Phantom_Troupe.png" alt="" class="corner-logo">FAINDA / ANIME · 第二話
+    </span>
+    <a href="index.html" style="color:var(--text-dim);letter-spacing:0.2em;font-size:11px;">← HOME</a>
+</div>
+<div class="top-rule"></div>
+
+<!-- Auth bar -->
 <div class="auth-bar">
     <span id="user-email"></span>
     <a href="#" id="sign-out-btn" class="hidden">SIGN OUT</a>
     <a href="#" id="sign-in-btn">SIGN IN</a>
 </div>
 
-<nav>
-    <a href="index.html">HOME &nbsp&nbsp&nbsp&nbsp&nbsp </a>
-    <a href="manga.html">&nbsp&nbsp&nbsp&nbsp&nbspMANGA </a>
-</nav>
+<!-- Main content -->
+<div class="anime-content">
 
-<div id="loading-message">Loading...</div>
-
-<div class="search-box">
-    <div class="row">
-        <input type="text" placeholder="Enter Anime!!" id="anime-name" autocomplete="off">
-        <label for="rate">Rate: </label>
-        <select name="Rating" id="rate">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-        </select>
-        <button id="search-button"><i class="fa-solid fa-plus"></i></button>
+    <!-- Step progress indicator -->
+    <div class="step-progress">
+        <div class="step active">
+            <div class="step-kanji">一</div>
+            <div class="step-label">RATE</div>
+        </div>
+        <div class="step-line active"></div>
+        <div class="step active">
+            <div class="step-kanji">二</div>
+            <div class="step-label">SORT</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+            <div class="step-kanji">三</div>
+            <div class="step-label">FIND</div>
+        </div>
     </div>
-    <div class="result-box"></div>
-</div>
 
-<div class="container">
+    <h1 class="anime-heading">What have you watched?</h1>
+    <p class="anime-subtitle">— rate at least five, then we'll find a stranger like you</p>
+
+    <!-- Search / add anime -->
+    <div class="search-box">
+        <div class="row">
+            <span class="search-icon">⌕</span>
+            <input type="text" id="anime-name" placeholder="e.g. Hunter × Hunter" autocomplete="off">
+            <span class="rate-label">RATE</span>
+            <select id="rate">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10" selected>10</option>
+            </select>
+            <button id="search-button">+ ADD</button>
+        </div>
+        <div class="result-box"></div>
+    </div>
+
+    <!-- Rated anime chips -->
     <div id="displayContainer">
         <ol id="displayList"></ol>
     </div>
-    <div class="bottom-left">
-        <label for="sort">Sort by: </label>
-        <select name="SortBy" id="sort">
+
+    <!-- Sort + Find controls -->
+    <div class="controls-section">
+        <div class="sort-pills">
+            <button class="sort-pill active" data-sort="TopRanked">
+                <span>TOP RANKED</span>
+                <span class="sort-pill-jp">上位</span>
+            </button>
+            <button class="sort-pill" data-sort="HiddenGems">
+                <span>HIDDEN GEMS</span>
+                <span class="sort-pill-jp">隠れた名作</span>
+            </button>
+            <button class="sort-pill" data-sort="HighScore">
+                <span>HIGH SCORE</span>
+                <span class="sort-pill-jp">高得点</span>
+            </button>
+        </div>
+
+        <!-- Hidden select — read by script.js -->
+        <select id="sort" class="hidden">
             <option value="TopRanked">Top Ranked</option>
             <option value="HiddenGems">Hidden Gems</option>
             <option value="HighScore">Highest Score</option>
         </select>
-    </div>
-    <button id="filter" class="btn-bottom-right">
-        <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
-</div>
 
-<div id="recommendations"><h1 class="recom-title">FAINDA • ファインダ</h1></div>
-<div id="imageContainer"></div>
+        <button id="filter" class="find-btn">
+            <div class="find-main">FIND →</div>
+            <div class="find-sub">探す・SEARCH</div>
+        </button>
+    </div>
+
+    <!-- Recommendation output (populated by script.js) -->
+    <div id="recommendations"></div>
+    <div id="imageContainer"></div>
+
+</div><!-- /.anime-content -->
 
 <!-- Detail modal -->
 <div class="modal" id="myModal">
@@ -83,37 +151,32 @@
         <button id="auth-submit-btn">SIGN IN</button>
         <p><a href="#" id="auth-toggle">Don't have an account? Register</a></p>
         <hr>
-        <button id="google-sign-in" class="google-btn">
-            <i class="fa-brands fa-google"></i> Continue with Google
-        </button>
+        <button id="google-sign-in" class="google-btn">Continue with Google</button>
     </div>
 </div>
 
-<div id="popupContainer" class="popup-container">
-    <div class="popup-content"><p>You have already added this anime :)</p></div>
-</div>
-<div id="popupContainer2" class="popup-container">
-    <div class="popup-content"><p>Please search and select an anime from the list!</p></div>
-</div>
-
-<img src="images/spiderlily-PhotoRoom.png" class="flower-deco-15">
-<img src="images/skeleton.png" class="skeleton-deco">
-
-<div class="socials">
-    <a href="https://www.instagram.com/_dylanchiu_/"><i class="fa-brands fa-instagram fa-2xl" style="color: #4d2a5a;"></i>&nbsp&nbsp</a>
-    <a href="https://github.com/Dylanpchiu"><i class="fa-brands fa-github fa-2xl" style="color: #4d2a5a;"></i>&nbsp&nbsp</a>
-    <a href="https://www.linkedin.com/in/dylan-chiu-437aa727a"><i class="fa-brands fa-linkedin fa-2xl" style="color: #4d2a5a;"></i></a>
-</div>
+<footer class="anime-footer">
+    <span>MIN 5 RATINGS</span>
+    <span>SCANS 7,667,185 USERS</span>
+</footer>
 
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-functions-compat.js"></script>
 <script src="/__/firebase/init.js"></script>
-<script src="https://kit.fontawesome.com/01a2aa2290.js" crossorigin="anonymous"></script>
-<script src="script.js?v=3"></script>
+<script>
+    // Sync sort pill clicks to the hidden #sort select (script.js reads select.value)
+    document.querySelectorAll('.sort-pill').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.sort-pill').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            document.getElementById('sort').value = btn.dataset.sort;
+        });
+    });
+</script>
+<script src="script.js?v=4"></script>
 <script src="autocomplete.js?v=2"></script>
 <script src="loading.js?v=2"></script>
-
 </body>
 </html>

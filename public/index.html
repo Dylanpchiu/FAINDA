@@ -2,39 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FAINDA</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
-<body>
+<body class="page-index">
 
-<h1>
-    &nbsp&nbsp&nbspFAINDA • ファインダ
-</h1>
-<p class="indexParagraph">
-    &nbsp&nbsp&nbspAnime + Manga Recommendations
-</p>
+<!-- Fixed background layers -->
+<div class="bg-radial-index"></div>
+<div class="kana-watermark">ファインダ</div>
+<img src="images/spiderlily-PhotoRoom.png" alt="" class="img-spiderlily-index">
+<img src="images/skeleton.png" alt="" class="img-skeleton-index">
 
-<nav>
-    <a href="anime.html">ANIME &nbsp&nbsp&nbsp&nbsp&nbsp</a>
-    <a href="manga.html">&nbsp&nbsp&nbsp&nbsp&nbsp MANGA</a>
-</nav>
+<!-- Scrollable content above bg -->
+<div class="index-content">
+    <div class="top-bar">
+        <span>EP. 01 · ファインダ</span>
+        <span>2024 — 2026</span>
+    </div>
+    <div class="top-rule"></div>
 
-<div class="img-container">
-    <img src="images/Phantom_Troupe.png" alt="Spider" class="image-front">
+    <nav class="index-nav">
+        <div class="index-nav-left">
+            <a href="anime.html" class="nav-active">● ANIME</a>
+            <a href="manga.html" class="nav-dim">○ MANGA</a>
+        </div>
+        <a href="anime.html" class="nav-signin">SIGN IN ↗</a>
+    </nav>
+
+    <div class="index-hero">
+        <div class="hero-text">
+            <div class="hero-label">第 一 話 — A FINDER</div>
+            <h1 class="hero-heading">Find your<br>next obsession.</h1>
+            <p class="hero-desc">You rate a few shows you love. FAINDA hunts down the user most like you across 7.6M ratings — and tells you what they couldn't stop watching.</p>
+            <div class="hero-tagline">— A SHOW ABOUT FINDING SHOWS —</div>
+        </div>
+        <div class="hero-spider-wrap">
+            <div class="hero-spider-glow"></div>
+            <div class="hero-spider-screen">
+                <img src="images/Phantom_Troupe.png" alt="spider" class="hero-spider-img">
+            </div>
+        </div>
+    </div>
+
+    <div class="index-bottom">
+        <div class="index-cta">
+            <a href="anime.html" class="cta-box">
+                <div>
+                    <div class="cta-heading">Recommend me</div>
+                    <div class="cta-sub">RATE → FIND</div>
+                </div>
+                <div class="cta-arrow">→</div>
+            </a>
+            <div class="manga-note">MANGA — 制作中 (in production)</div>
+        </div>
+        <div class="index-stats">
+            <div class="stat-row"><span>TITLES</span><span class="stat-val">14,954</span></div>
+            <div class="stat-row"><span>RATINGS SCANNED</span><span class="stat-val">7,667,185</span></div>
+            <div class="stat-row"><span>METHOD</span><span class="stat-val">COSINE SIM.</span></div>
+        </div>
+    </div>
 </div>
 
-<div class="socials">
-    <a href="https://www.instagram.com/_dylanchiu_/"><i class="fa-brands fa-instagram fa-2xl" style="color: #4d2a5a;"></i>&nbsp&nbsp</a>
-    <a href="https://github.com/Dylanpchiu"><i class="fa-brands fa-github fa-2xl" style="color: #4d2a5a;"></i>&nbsp&nbsp</a>
-    <a href="https://www.linkedin.com/in/dylan-chiu-437aa727a"><i class="fa-brands fa-linkedin fa-2xl" style="color: #4d2a5a;"></i></a>
-</div>
+<footer class="index-footer">
+    <span>BY D. CHIU</span>
+    <div class="socials">
+        <a href="https://www.instagram.com/_dylanchiu_/">IG</a>
+        <a href="https://github.com/Dylanpchiu">GH</a>
+        <a href="https://www.linkedin.com/in/dylan-chiu-437aa727a">IN</a>
+    </div>
+</footer>
 
-<script src="https://kit.fontawesome.com/01a2aa2290.js" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics-compat.js"></script>
 <script src="/__/firebase/init.js"></script>
 <script>firebase.analytics();</script>
-
 </body>
 </html>

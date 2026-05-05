@@ -1,0 +1,51 @@
+- generic [active] [ref=e1]:
+  - generic: ファインダ
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: EP. 01 · ファインダ
+      - generic [ref=e5]: 2024 — 2026
+    - navigation [ref=e7]:
+      - generic [ref=e8]:
+        - link "● ANIME" [ref=e9] [cursor=pointer]:
+          - /url: anime.html
+        - link "○ MANGA" [ref=e10] [cursor=pointer]:
+          - /url: manga.html
+      - link "SIGN IN ↗" [ref=e11] [cursor=pointer]:
+        - /url: anime.html
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: 第 一 話 — A FINDER
+        - heading "Find your next obsession." [level=1] [ref=e15]:
+          - text: Find your
+          - text: next obsession.
+        - paragraph [ref=e16]: You rate a few shows you love. FAINDA hunts down the user most like you across 7.6M ratings — and tells you what they couldn't stop watching.
+        - generic [ref=e17]: — A SHOW ABOUT FINDING SHOWS —
+      - img "spider" [ref=e20]
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - link "Recommend me RATE → FIND →" [ref=e23] [cursor=pointer]:
+          - /url: anime.html
+          - generic [ref=e24]:
+            - generic [ref=e25]: Recommend me
+            - generic [ref=e26]: RATE → FIND
+          - generic [ref=e27]: →
+        - generic [ref=e28]: MANGA — 制作中 (in production)
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]: TITLES
+          - generic [ref=e32]: 14,954
+        - generic [ref=e33]:
+          - generic [ref=e34]: RATINGS SCANNED
+          - generic [ref=e35]: 7,667,185
+        - generic [ref=e36]:
+          - generic [ref=e37]: METHOD
+          - generic [ref=e38]: COSINE SIM.
+  - contentinfo [ref=e39]:
+    - generic [ref=e40]: BY D. CHIU
+    - generic [ref=e41]:
+      - link "IG" [ref=e42] [cursor=pointer]:
+        - /url: https://www.instagram.com/_dylanchiu_/
+      - link "GH" [ref=e43] [cursor=pointer]:
+        - /url: https://github.com/Dylanpchiu
+      - link "IN" [ref=e44] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/dylan-chiu-437aa727a

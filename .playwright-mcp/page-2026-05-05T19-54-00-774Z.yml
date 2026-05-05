@@ -1,0 +1,55 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: FAINDA / ANIME · 第二話
+    - link "← HOME" [ref=e4] [cursor=pointer]:
+      - /url: index.html
+  - link "SIGN IN" [ref=e7] [cursor=pointer]:
+    - /url: "#"
+  - generic [ref=e8]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: 一
+        - generic [ref=e12]: RATE
+      - generic [ref=e14]:
+        - generic [ref=e15]: 二
+        - generic [ref=e16]: SORT
+      - generic [ref=e18]:
+        - generic [ref=e19]: 三
+        - generic [ref=e20]: FIND
+    - heading "What have you watched?" [level=1] [ref=e21]
+    - paragraph [ref=e22]: — rate at least five, then we'll find a stranger like you
+    - generic [ref=e24]:
+      - generic [ref=e25]: ⌕
+      - textbox "e.g. Hunter × Hunter" [ref=e26]
+      - generic [ref=e27]: RATE
+      - combobox [ref=e28] [cursor=pointer]:
+        - option "1"
+        - option "2"
+        - option "3"
+        - option "4"
+        - option "5"
+        - option "6"
+        - option "7"
+        - option "8"
+        - option "9"
+        - option "10" [selected]
+      - button "+ ADD" [ref=e29] [cursor=pointer]
+    - generic:
+      - list
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - button "TOP RANKED 上位" [ref=e32] [cursor=pointer]:
+          - generic [ref=e33]: TOP RANKED
+          - generic [ref=e34]: 上位
+        - button "HIDDEN GEMS 隠れた名作" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: HIDDEN GEMS
+          - generic [ref=e37]: 隠れた名作
+        - button "HIGH SCORE 高得点" [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]: HIGH SCORE
+          - generic [ref=e40]: 高得点
+      - button "FIND → 探す・SEARCH" [ref=e41] [cursor=pointer]:
+        - generic [ref=e42]: FIND →
+        - generic [ref=e43]: 探す・SEARCH
+  - contentinfo [ref=e45]:
+    - generic [ref=e46]: MIN 5 RATINGS
+    - generic [ref=e47]: SCANS 7,667,185 USERS
